@@ -4,15 +4,20 @@ import { Home, Users, DollarSign, TrendingUp, Settings, BarChart3 } from "lucide
 import { cn } from "@/lib/utils"
 
 const navigationItems = [
-  { icon: Home, label: "Dashboard", active: true },
-  { icon: Users, label: "Members", active: false },
-  { icon: DollarSign, label: "Finance", active: false },
-  { icon: TrendingUp, label: "Analytics", active: false },
-  { icon: BarChart3, label: "Reports", active: false },
-  { icon: Settings, label: "Settings", active: false },
+  { icon: Home, label: "Dashboard", key: "dashboard" },
+  { icon: Users, label: "Members", key: "members" },
+  { icon: DollarSign, label: "Finance", key: "finance" },
+  { icon: TrendingUp, label: "Expenditure", key: "expenditure" },
+  { icon: BarChart3, label: "Reports", key: "reports" },
+  { icon: Settings, label: "Settings", key: "settings" },
 ]
 
-export function AdminSidebar() {
+interface AdminSidebarProps {
+  onNavigate: (view: string) => void
+  activeView: string
+}
+
+export function AdminSidebar({ onNavigate, activeView }: AdminSidebarProps) {
   return (
     <div className="w-64 h-screen bg-primary text-primary-foreground flex flex-col">
       {/* Logo/Brand */}
@@ -26,9 +31,12 @@ export function AdminSidebar() {
           {navigationItems.map((item, index) => (
             <li key={index}>
               <button
+                onClick={() => onNavigate(item.key)}
                 className={cn(
                   "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors",
-                  item.active ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-primary-foreground/10",
+                  activeView === item.key
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "hover:bg-primary-foreground/10",
                 )}
               >
                 <item.icon className="h-5 w-5" />
