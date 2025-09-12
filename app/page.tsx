@@ -1,56 +1,33 @@
 "use client"
 
-import { useEffect } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
-import { OverviewKpiSection } from "@/components/overview/overview-kpi-section"
-import { EnergyTrendChart } from "@/components/overview/energy-trend-chart"
-import { LoadDurationCurve } from "@/components/overview/load-duration-curve"
-import { EnergyHeatmap } from "@/components/overview/energy-heatmap"
-import { PeakUsageAnalysis } from "@/components/overview/peak-usage-analysis"
-import { ConsumptionBreakdown } from "@/components/overview/consumption-breakdown"
-import { PeriodComparison } from "@/components/overview/period-comparison"
-import { SystemAlertsWidget } from "@/components/overview/system-alerts-widget"
-import { useAppDispatch, useOverviewData, useOverviewLoading } from "@/lib/store/hooks"
-import { fetchOverviewDataRequest } from "@/lib/store/slices/overviewSlice"
+import { AdminSidebar } from "@/components/admin-sidebar"
+import { KpiCard } from "@/components/kpi-card"
+import { Users, DollarSign, TrendingDown, UserCheck } from "lucide-react"
 
-export default function OverviewPage() {
-  const dispatch = useAppDispatch()
-  const data = useOverviewData()
-  const loading = useOverviewLoading()
-
-  useEffect(() => {
-    if (!data) {
-      dispatch(fetchOverviewDataRequest())
-    }
-  }, [dispatch, data])
-
+export default function AdminDashboard() {
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
-        {/* KPI Section - Full Width */}
-        <OverviewKpiSection />
+    <div className="flex h-screen bg-background">
+      {/* Sidebar */}
+      <AdminSidebar />
 
-        {/* Energy Consumption Trend and Peak Usage Analysis - Side by Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <EnergyTrendChart />
-          <PeakUsageAnalysis />
+      {/* Main Content */}
+      <div className="flex-1 p-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard Overview</h1>
+            <p className="text-muted-foreground">Welcome back! Here's what's happening with your business today.</p>
+          </div>
+
+          {/* KPI Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <KpiCard title="Total Members" value="2,847" icon={Users} trend="+12% from last month" />
+            <KpiCard title="Total Collection" value="$45,230" icon={DollarSign} trend="+8% from last month" />
+            <KpiCard title="Total Expenditure" value="$32,180" icon={TrendingDown} trend="-3% from last month" />
+            <KpiCard title="Running Members" value="1,924" icon={UserCheck} trend="+5% from last month" />
+          </div>
         </div>
-
-        {/* Load Duration Curve and Energy Consumption Heatmap - Side by Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <LoadDurationCurve />
-          <EnergyHeatmap />
-        </div>
-
-        {/* Consumption Breakdown and Period Comparison - Side by Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ConsumptionBreakdown />
-          <PeriodComparison />
-        </div>
-
-        {/* Active Alerts - Full Width at Bottom */}
-        <SystemAlertsWidget />
       </div>
-    </DashboardLayout>
+    </div>
   )
 }
