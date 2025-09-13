@@ -1,14 +1,13 @@
 "use client"
 
-import { Home, Users, DollarSign, TrendingUp, Settings, BarChart3 } from "lucide-react"
+import { Home, Users, Wallet, TrendingUp, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigationItems = [
   { icon: Home, label: "Dashboard", key: "dashboard" },
   { icon: Users, label: "Members", key: "members" },
-  { icon: DollarSign, label: "Finance", key: "finance" },
+  { icon: Wallet, label: "Collection", key: "collection" },
   { icon: TrendingUp, label: "Expenditure", key: "expenditure" },
-  { icon: BarChart3, label: "Reports", key: "reports" },
   { icon: Settings, label: "Settings", key: "settings" },
 ]
 
