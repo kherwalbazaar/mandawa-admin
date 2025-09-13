@@ -1,10 +1,16 @@
+import { LogOut } from "lucide-react"
+
 export function AdminHeader() {
   return (
-    <div className="bg-primary text-primary-foreground px-8 py-4 border-b border-sidebar-border/20">
+    <div className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
       <div>
-        <h1 className="text-xl font-bold">ADIM LAHAH MANDAWA</h1>
-        <p className="text-sm opacity-90">Bahanada, Khunta, Mayurbhanj</p>
+        <h1 className="text-2xl font-bold text-gray-900">Team Member Dashboard</h1>
       </div>
+
+      <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+        <span className="text-sm font-medium">LOGOUT</span>
+        <LogOut className="h-4 w-4" />
+      </button>
     </div>
   )
 }

@@ -7,33 +7,37 @@ interface KpiCardProps {
   value: string
   icon: LucideIcon
   trend?: string
+  colorClass: "green" | "purple" | "blue" | "orange"
 }
 
-export function KpiCard({ title, value, icon: Icon, trend }: KpiCardProps) {
+export function KpiCard({ title, value, icon: Icon, trend, colorClass }: KpiCardProps) {
+  const getCardClasses = (color: string) => {
+    switch (color) {
+      case "green":
+        return "bg-gradient-to-br from-emerald-500 to-emerald-400"
+      case "purple":
+        return "bg-gradient-to-br from-purple-500 to-purple-400"
+      case "blue":
+        return "bg-gradient-to-br from-blue-500 to-blue-400"
+      case "orange":
+        return "bg-gradient-to-br from-orange-500 to-orange-400"
+      default:
+        return "bg-gradient-to-br from-emerald-500 to-emerald-400"
+    }
+  }
+
   return (
     <div
-      className="rounded-lg shadow-lg p-6 border-0"
-      style={{
-        background: "linear-gradient(135deg, #10b981 0%, #facc15 100%)",
-        color: "#1f2937",
-      }}
+      className={`${getCardClasses(colorClass)} rounded-xl shadow-lg p-6 border-0 transition-transform hover:scale-105 text-white`}
     >
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium mb-2" style={{ color: "#374151" }}>
-            {title}
-          </p>
-          <p className="text-3xl font-bold mb-1" style={{ color: "#111827" }}>
-            {value}
-          </p>
-          {trend && (
-            <p className="text-sm" style={{ color: "#4b5563" }}>
-              {trend}
-            </p>
-          )}
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
+          <h3 className="text-4xl font-bold text-white mb-2">{value}</h3>
+          <p className="text-white font-medium text-sm">{title}</p>
+          {trend && <p className="text-white/90 text-xs mt-1">{trend}</p>}
         </div>
-        <div className="p-3 rounded-lg" style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}>
-          <Icon className="h-6 w-6" style={{ color: "#1f2937" }} />
+        <div className="p-2 rounded-lg bg-white/20">
+          <Icon className="h-6 w-6 text-white" />
         </div>
       </div>
     </div>
