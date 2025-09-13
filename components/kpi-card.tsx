@@ -14,31 +14,29 @@ export function KpiCard({ title, value, icon: Icon, trend, colorClass }: KpiCard
   const getCardClasses = (color: string) => {
     switch (color) {
       case "green":
-        return "bg-gradient-to-br from-emerald-500 to-emerald-400"
+        return "bg-emerald-600 text-white"
       case "purple":
-        return "bg-gradient-to-br from-purple-500 to-purple-400"
+        return "bg-purple-600 text-white"
       case "blue":
-        return "bg-gradient-to-br from-blue-500 to-blue-400"
+        return "bg-blue-600 text-white"
       case "orange":
-        return "bg-gradient-to-br from-orange-500 to-orange-400"
+        return "bg-orange-600 text-white"
       default:
-        return "bg-gradient-to-br from-emerald-500 to-emerald-400"
+        return "bg-emerald-600 text-white"
     }
   }
 
   return (
     <div
-      className={`${getCardClasses(colorClass)} rounded-xl shadow-lg p-6 border-0 transition-transform hover:scale-105 text-white`}
+      className={`${getCardClasses(colorClass)} rounded-xl shadow-lg p-6 border-0 transition-transform hover:scale-105`}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h3 className="text-4xl font-bold text-white mb-2">{value}</h3>
-          <p className="text-white font-medium text-sm">{title}</p>
-          {trend && <p className="text-white/90 text-xs mt-1">{trend}</p>}
+          <h3 className="text-4xl font-bold mb-2 text-white">{value}</h3>
+          <p className="font-medium text-sm text-white">{title}</p>
+          {trend && <p className="text-xs mt-1 text-white/90">{trend}</p>}
         </div>
-        <div className="p-2 rounded-lg bg-white/20">
-          <Icon className="h-6 w-6 text-white" />
-        </div>
+        <div className="p-2 rounded-lg bg-white/20">{Icon && <Icon className="h-6 w-6 text-white" />}</div>
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ import { AdminHeader } from "@/components/admin-header"
 import { MembersList } from "@/components/members-list"
 import { ExpenditureList } from "@/components/expenditure-list"
 import { FinanceList } from "@/components/finance-list"
-import { FileText, Eye, Calendar, CheckCircle } from "lucide-react"
+import { Users, Wallet, TrendingUp, BookOpen } from "lucide-react"
 
 export default function AdminDashboard() {
   const [activeView, setActiveView] = useState("dashboard")
@@ -28,51 +28,31 @@ export default function AdminDashboard() {
         return <FinanceList showEditOptions={true} />
       case "expenditure":
         return <ExpenditureList showEditOptions={true} />
+      case "cashbook":
+        return <FinanceList showEditOptions={true} />
       case "members-details":
         return <MembersList showEditOptions={false} />
       case "collection-details":
         return <FinanceList showEditOptions={false} />
       case "expenditure-details":
         return <ExpenditureList showEditOptions={false} />
+      case "cashbook-details":
+        return <FinanceList showEditOptions={false} />
       default:
         return (
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div onClick={() => handleCardClick("members")} className="cursor-pointer">
-                <KpiCard
-                  title="Documents Sent"
-                  value="106"
-                  icon={FileText}
-                  trend="+12% from last month"
-                  colorClass="green"
-                />
+                <KpiCard title="Member" value="106" icon={Users} trend="" colorClass="green" />
               </div>
               <div onClick={() => handleCardClick("collection")} className="cursor-pointer">
-                <KpiCard
-                  title="Documents Viewed"
-                  value="13"
-                  icon={Eye}
-                  trend="+8% from last month"
-                  colorClass="purple"
-                />
+                <KpiCard title="Collection" value="13" icon={Wallet} trend="" colorClass="purple" />
               </div>
               <div onClick={() => handleCardClick("expenditure")} className="cursor-pointer">
-                <KpiCard
-                  title="Documents Expiring"
-                  value="30"
-                  icon={Calendar}
-                  trend="-3% from last month"
-                  colorClass="blue"
-                />
+                <KpiCard title="Expenditure" value="30" icon={TrendingUp} trend="" colorClass="blue" />
               </div>
-              <div onClick={() => handleCardClick("members")} className="cursor-pointer">
-                <KpiCard
-                  title="Documents Signed"
-                  value="59"
-                  icon={CheckCircle}
-                  trend="+5% from last month"
-                  colorClass="orange"
-                />
+              <div onClick={() => handleCardClick("cashbook")} className="cursor-pointer">
+                <KpiCard title="Cash Book" value="59" icon={BookOpen} trend="" colorClass="orange" />
               </div>
             </div>
 

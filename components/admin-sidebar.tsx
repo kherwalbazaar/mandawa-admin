@@ -1,14 +1,14 @@
 "use client"
 
-import { Home, Users, Wallet, TrendingUp, Mail, LogOut } from "lucide-react"
+import { Home, Users, Wallet, TrendingUp, BookOpen, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigationItems = [
   { icon: Home, label: "Dashboard", key: "dashboard" },
-  { icon: Mail, label: "Mail", key: "mail" },
-  { icon: Users, label: "Members", key: "members" },
+  { icon: Users, label: "Member", key: "members" },
   { icon: Wallet, label: "Collection", key: "collection" },
   { icon: TrendingUp, label: "Expenditure", key: "expenditure" },
+  { icon: BookOpen, label: "Cash Book", key: "cashbook" },
 ]
 
 interface AdminSidebarProps {
@@ -19,6 +19,15 @@ interface AdminSidebarProps {
 export function AdminSidebar({ onNavigate, activeView }: AdminSidebarProps) {
   return (
     <div className="w-64 h-screen bg-blue-700 text-white flex flex-col">
+      <div className="p-4 border-b border-blue-600 text-center">
+        <h1 className="text-lg font-bold text-white mb-2">MANDAWA</h1>
+        <img
+          src="https://ik.imagekit.io/kherwalbazaar/Mandawa%20Logo%20small.jpg?updatedAt=1757390794798"
+          alt="Mandawa Logo"
+          className="w-16 h-16 mx-auto rounded-full object-cover border-2 border-blue-500"
+        />
+      </div>
+
       <div className="flex items-center gap-3 p-4 border-b border-blue-600">
         <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
           AM
@@ -30,7 +39,6 @@ export function AdminSidebar({ onNavigate, activeView }: AdminSidebarProps) {
       </div>
 
       <nav className="flex-1 p-4 space-y-1">
-        <h3 className="text-xs font-semibold text-blue-200 uppercase tracking-wider mb-4">Main Navigation</h3>
         {navigationItems.map((item, index) => (
           <button
             key={index}
@@ -46,12 +54,6 @@ export function AdminSidebar({ onNavigate, activeView }: AdminSidebarProps) {
             <span className="font-medium">{item.label}</span>
           </button>
         ))}
-
-        <div className="mt-8">
-          <button className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors w-full">
-            QUICK SEND
-          </button>
-        </div>
       </nav>
 
       <div className="p-4 border-t border-blue-600">
