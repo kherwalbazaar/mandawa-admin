@@ -16,7 +16,7 @@ export interface Member {
 export const members: Member[] = [
   {
     id: "1",
-    name: "Balakram Tudu",
+    name: "Balakram Tudu2",
     image: "https://ik.imagekit.io/kherwalbazaar/BALAK%20BABU12.jpg?updatedAt=1742399275938",
     paidDate: "2025-07-20",
     paymentHistory: [
