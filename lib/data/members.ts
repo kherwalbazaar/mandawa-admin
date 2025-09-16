@@ -356,13 +356,14 @@ export const getMembersSortedByTotalPaid = (): Member[] => {
 
 export const getPaymentStatus = (member: Member) => {
   const totalPaid = getMemberTotalPaid(member)
+
   if (totalPaid === 0) {
-    return { status: "Unpaid", color: "text-red-600", bgColor: "bg-red-100" }
+    return { status: "Unpaid", color: "text-white", bgColor: "bg-red-800" }
   } else if (totalPaid < 3000) {
-    return { status: `₹${totalPaid}`, color: "text-yellow-600", bgColor: "bg-yellow-100" }
+    return { status: `${totalPaid}/-`, color: "text-white", bgColor: "bg-yellow-600" }
   } else if (totalPaid === 3000) {
-    return { status: "Paid", color: "text-green-600", bgColor: "bg-green-100" }
+    return { status: "Paid", color: "text-white", bgColor: "bg-green-700" }
   } else {
-    return { status: "VIP Member", color: "text-purple-600", bgColor: "bg-purple-100" }
+    return { status: "VIP Member", color: "text-white", bgColor: "bg-blue-700" }
   }
 }

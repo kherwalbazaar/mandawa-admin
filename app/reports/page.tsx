@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BookOpen, Plus, Edit, Trash2, FileText } from "lucide-react"
@@ -55,15 +54,14 @@ export default function CashBookPage() {
   const balance = totalIncome - totalExpense
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Page Header */}
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Cash Book</h1>
             <p className="text-gray-600 mt-1">Track all financial transactions and maintain records</p>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-green-600 hover:bg-green-700 text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Transaction
           </Button>
@@ -121,24 +119,24 @@ export default function CashBookPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="w-full border-collapse border border-gray-300">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left p-3 font-semibold">Date</th>
-                    <th className="text-left p-3 font-semibold">Description</th>
-                    <th className="text-left p-3 font-semibold">Category</th>
-                    <th className="text-left p-3 font-semibold">Type</th>
-                    <th className="text-left p-3 font-semibold">Amount</th>
+                  <tr className="bg-gray-100 border-b border-gray-300">
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Date</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Description</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Category</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Type</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Amount</th>
                     <th className="text-left p-3 font-semibold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {transactions.map((transaction) => (
-                    <tr key={transaction.id} className="border-b hover:bg-gray-50">
-                      <td className="p-3 text-gray-600">{transaction.date}</td>
-                      <td className="p-3 font-medium">{transaction.description}</td>
-                      <td className="p-3 text-gray-600">{transaction.category}</td>
-                      <td className="p-3">
+                    <tr key={transaction.id} className="border-b border-gray-300 hover:bg-gray-50">
+                      <td className="p-3 border-r border-gray-300 text-gray-600">{transaction.date}</td>
+                      <td className="p-3 border-r border-gray-300 font-medium">{transaction.description}</td>
+                      <td className="p-3 border-r border-gray-300 text-gray-600">{transaction.category}</td>
+                      <td className="p-3 border-r border-gray-300">
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-medium ${
                             transaction.type === "Income" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
@@ -148,7 +146,7 @@ export default function CashBookPage() {
                         </span>
                       </td>
                       <td
-                        className={`p-3 font-semibold ${
+                        className={`p-3 border-r border-gray-300 font-semibold ${
                           transaction.type === "Income" ? "text-green-600" : "text-red-600"
                         }`}
                       >
@@ -156,7 +154,7 @@ export default function CashBookPage() {
                       </td>
                       <td className="p-3">
                         <div className="flex space-x-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
                             <Edit className="w-4 h-4" />
                           </Button>
                           <Button
@@ -176,6 +174,5 @@ export default function CashBookPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
-  )
-}
+    )
+  }

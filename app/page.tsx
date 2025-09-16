@@ -1,67 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { AdminSidebar } from "@/components/admin-sidebar"
 import { KpiCard } from "@/components/kpi-card"
-import { AdminHeader } from "@/components/admin-header"
 import { Users, Wallet, TrendingUp, BookOpen } from "lucide-react"
 import { members, getTotalCollection } from "@/lib/data/members"
 import { getTotalExpenditure } from "@/lib/data/expenditure"
-import { useRouter } from "next/navigation"
 
 export default function AdminDashboard() {
-  const [activeView, setActiveView] = useState("dashboard")
-  const router = useRouter()
+  const [activeView] = useState("dashboard")
 
   const totalMembers = members.length
   const totalCollection = getTotalCollection()
   const totalExpenditure = getTotalExpenditure()
   const netBalance = totalCollection - totalExpenditure
 
-  const handleSidebarClick = (view: string) => {
-    switch (view.toLowerCase()) {
-      case "members":
-        router.push("/members")
-        break
-      case "collection":
-        router.push("/collection")
-        break
-      case "expenditure":
-        router.push("/expenditure")
-        break
-      case "cashbook":
-        router.push("/cashbook")
-        break
-      default:
-        setActiveView(view.toLowerCase())
-    }
-  }
-
-  const handleCardClick = (cardType: string) => {
-    switch (cardType) {
-      case "members":
-        router.push("/members")
-        break
-      case "collection":
-        router.push("/collection")
-        break
-      case "expenditure":
-        router.push("/expenditure")
-        break
-      case "cashbook":
-        router.push("/cashbook")
-        break
-    }
-  }
-
   const renderMainContent = () => {
     return (
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div onClick={() => handleCardClick("members")} className="cursor-pointer">
+          <div className="cursor-default">
             <KpiCard title="Member" value={totalMembers.toString()} icon={Users} trend="" colorClass="green" />
           </div>
-          <div onClick={() => handleCardClick("collection")} className="cursor-pointer">
+          <div className="cursor-default">
             <KpiCard
               title="Collection"
               value={`₹${Math.round(totalCollection / 1000)}K`}
@@ -70,7 +30,7 @@ export default function AdminDashboard() {
               colorClass="purple"
             />
           </div>
-          <div onClick={() => handleCardClick("expenditure")} className="cursor-pointer">
+          <div className="cursor-default">
             <KpiCard
               title="Expenditure"
               value={`₹${Math.round(totalExpenditure / 1000)}K`}
@@ -79,7 +39,7 @@ export default function AdminDashboard() {
               colorClass="blue"
             />
           </div>
-          <div onClick={() => handleCardClick("cashbook")} className="cursor-pointer">
+          <div className="cursor-default">
             <KpiCard
               title="Cash Book"
               value={`₹${Math.round(Math.abs(netBalance) / 1000)}K`}
@@ -101,10 +61,7 @@ export default function AdminDashboard() {
                   className="pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
-              <button
-                onClick={() => router.push("/members")}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-              >
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
                 VIEW ALL
               </button>
             </div>
@@ -147,10 +104,7 @@ export default function AdminDashboard() {
                       <td className="py-3 px-4 text-sm text-gray-600">{member.paidDate || "No payment"}</td>
                       <td className="py-3 px-4 text-sm text-gray-600">{member.paymentHistory.length} payments</td>
                       <td className="py-3 px-4">
-                        <button
-                          onClick={() => router.push("/members")}
-                          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                        >
+                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
                           VIEW
                         </button>
                       </td>
@@ -165,16 +119,6 @@ export default function AdminDashboard() {
     )
   }
 
-  return (
-    <div className="flex h-screen bg-gray-50">
-      <AdminSidebar onNavigate={handleSidebarClick} activeView={activeView} />
-
-      <div className="flex-1 flex flex-col">
-        <AdminHeader />
-        <div className="flex-1 p-8 overflow-auto">
-          <div className="max-w-7xl mx-auto">{renderMainContent()}</div>
-        </div>
-      </div>
-    </div>
-  )
+  return renderMainContent()
 }
+

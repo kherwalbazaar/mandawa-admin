@@ -1,16 +1,25 @@
 "use client"
 
 import { useState } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
 import { members, getMemberTotalPaid, getPaymentStatus, type Member } from "@/lib/data/members"
-import { Users, Search, Filter, Eye } from "lucide-react"
+import { Users, Search, Filter, Eye, Plus, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 export default function MembersPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedMember, setSelectedMember] = useState<Member | null>(null)
+  const [showAddMember, setShowAddMember] = useState(false)
+  const [newMember, setNewMember] = useState({
+    name: "",
+    phone: "",
+    image: "",
+    initialPayment: "",
+    date: "",
+    description: "",
+  })
 
   const filteredMembers = members.filter((member) => member.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
@@ -19,41 +28,112 @@ export default function MembersPage() {
   const totalCollection = members.reduce((total, member) => total + getMemberTotalPaid(member), 0)
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white p-4 rounded-lg border shadow-sm">
+          <div className="p-4 rounded-lg shadow-sm bg-blue-600 text-white">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Users className="h-5 w-5 text-blue-600" />
+              <div className="p-2 bg-white/20 rounded-lg">
+                <Users className="h-5 w-5 text-white" />
+              </div>
+
+        {/* Add Member Dialog */}
+        <Dialog open={showAddMember} onOpenChange={setShowAddMember}>
+          <DialogContent className="relative max-w-lg bg-white border border-green-700">
+            <button
+              aria-label="Close"
+              onClick={() => setShowAddMember(false)}
+              className="absolute top-3 right-3 text-red-600 hover:text-red-700"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <DialogHeader>
+              <DialogTitle>Add Member</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-1 gap-4 py-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <Input
+                  value={newMember.name}
+                  onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
+                  placeholder="Member full name"
+                />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Members</p>
-                <p className="text-2xl font-bold text-gray-900">{totalMembers}</p>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <Input
+                  value={newMember.phone}
+                  onChange={(e) => setNewMember({ ...newMember, phone: e.target.value })}
+                  placeholder="Phone number"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
+                <Input
+                  value={newMember.image}
+                  onChange={(e) => setNewMember({ ...newMember, image: e.target.value })}
+                  placeholder="https://..."
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Initial Payment (₹)</label>
+                  <Input
+                    value={newMember.initialPayment}
+                    onChange={(e) => setNewMember({ ...newMember, initialPayment: e.target.value })}
+                    placeholder="e.g. 3000"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                  <Input
+                    type="date"
+                    value={newMember.date}
+                    onChange={(e) => setNewMember({ ...newMember, date: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <Input
+                  value={newMember.description}
+                  onChange={(e) => setNewMember({ ...newMember, description: e.target.value })}
+                  placeholder="Short note (optional)"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowAddMember(false)}>Cancel</Button>
+              <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setShowAddMember(false)}>Save</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+              <div>
+                <p className="text-sm text-white/90">Total Members</p>
+                <p className="text-2xl font-bold">{totalMembers}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border shadow-sm">
+          <div className="p-4 rounded-lg shadow-sm bg-green-600 text-white">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Users className="h-5 w-5 text-green-600" />
+              <div className="p-2 bg-white/20 rounded-lg">
+                <Users className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Paid Members</p>
-                <p className="text-2xl font-bold text-gray-900">{paidMembers}</p>
+                <p className="text-sm text-white/90">Paid Members</p>
+                <p className="text-2xl font-bold">{paidMembers}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border shadow-sm">
+          <div className="p-4 rounded-lg shadow-sm bg-purple-600 text-white">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Users className="h-5 w-5 text-purple-600" />
+              <div className="p-2 bg-white/20 rounded-lg">
+                <Users className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Collection</p>
-                <p className="text-2xl font-bold text-gray-900">₹{totalCollection.toLocaleString()}</p>
+                <p className="text-sm text-white/90">Total Collection</p>
+                <p className="text-2xl font-bold">₹{totalCollection.toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -67,24 +147,28 @@ export default function MembersPage() {
                 placeholder="Search members..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-white border border-gray-400 placeholder:text-gray-600"
               />
             </div>
-            <Button variant="outline" className="flex items-center gap-2 bg-transparent">
+            <Button variant="outline" className="flex items-center gap-2 bg-transparent border-gray-400">
               <Filter className="h-4 w-4" />
               Filter
+            </Button>
+            <Button className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white" onClick={() => setShowAddMember(true)}>
+              <Plus className="h-4 w-4" />
+              Add Member
             </Button>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse border border-green-700">
               <thead>
-                <tr className="bg-gray-50 border-b">
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Photo</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Member Name</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Total Paid</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Status</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Last Payment</th>
+                <tr className="bg-gray-100 border-b border-green-700">
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-700">Photo</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-700">Member Name</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-700">Total Paid</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-700">Status</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-700">Last Payment</th>
                   <th className="text-left p-3 font-semibold text-gray-900">Actions</th>
                 </tr>
               </thead>
@@ -92,12 +176,20 @@ export default function MembersPage() {
                 {filteredMembers.map((member, index) => {
                   const totalPaid = getMemberTotalPaid(member)
                   const status = getPaymentStatus(member)
+                  const amountColor =
+                    totalPaid === 0
+                      ? "text-red-700"
+                      : totalPaid === 3000
+                        ? "text-green-700"
+                        : totalPaid < 3000
+                          ? "text-yellow-700"
+                          : "text-blue-700"
                   return (
                     <tr
                       key={member.id}
-                      className={`border-b hover:bg-gray-50 ${index % 2 === 0 ? "bg-white" : "bg-gray-25"}`}
+                      className={`border-b border-green-700 hover:bg-gray-50 ${index % 2 === 0 ? "bg-white" : "bg-gray-25"}`}
                     >
-                      <td className="p-3 border-r">
+                      <td className="p-3 border-r border-green-700">
                         <Image
                           src={member.image || "/placeholder.svg"}
                           alt={member.name}
@@ -106,22 +198,23 @@ export default function MembersPage() {
                           className="rounded-full object-cover"
                         />
                       </td>
-                      <td className="p-3 border-r font-medium text-gray-900">{member.name}</td>
-                      <td className="p-3 border-r font-semibold">₹{totalPaid.toLocaleString()}</td>
-                      <td className="p-3 border-r">
+                      <td className="p-3 border-r border-green-700 font-medium text-gray-900">{member.name}</td>
+                      <td className="p-3 border-r border-green-700 font-semibold">
+                        <span className={amountColor}>₹{totalPaid.toLocaleString()}</span>
+                      </td>
+                      <td className="p-3 border-r border-green-700">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${status.bgColor} ${status.color}`}
+                          className={`px-2 py-1 rounded-full text-xs font-bold ${status.bgColor} ${status.color}`}
                         >
                           {status.status}
                         </span>
                       </td>
-                      <td className="p-3 border-r text-gray-600">{member.paidDate || "No payment"}</td>
+                      <td className="p-3 border-r border-green-700 text-gray-600">{member.paidDate || "No payment"}</td>
                       <td className="p-3">
                         <Button
-                          variant="outline"
                           size="sm"
                           onClick={() => setSelectedMember(member)}
-                          className="flex items-center gap-1"
+                          className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white"
                         >
                           <Eye className="h-3 w-3" />
                           View
@@ -137,7 +230,7 @@ export default function MembersPage() {
 
         {selectedMember && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full border border-green-700">
               <div className="flex items-center gap-4 mb-4">
                 <Image
                   src={selectedMember.image || "/placeholder.svg"}
@@ -180,6 +273,5 @@ export default function MembersPage() {
           </div>
         )}
       </div>
-    </DashboardLayout>
-  )
-}
+    )
+  }

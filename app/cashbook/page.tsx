@@ -1,12 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
 import { members, getTotalCollection } from "@/lib/data/members"
 import { expenditureData, getTotalExpenditure } from "@/lib/data/expenditure"
 import { TrendingUp, TrendingDown, DollarSign, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 export default function CashbookPage() {
   const [activeTab, setActiveTab] = useState<"summary" | "transactions">("summary")
@@ -40,8 +38,7 @@ export default function CashbookPage() {
   ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-lg border shadow-sm">
             <div className="flex items-center gap-3">
@@ -137,11 +134,9 @@ export default function CashbookPage() {
                         <span>₹{totalCollection.toLocaleString()}</span>
                       </div>
                     </div>
-                    <Link href="/collection">
-                      <Button className="mt-3 w-full bg-transparent" variant="outline">
-                        View Collection Details
-                      </Button>
-                    </Link>
+                    <Button className="mt-3 w-full bg-transparent" variant="outline" onClick={() => setActiveTab("transactions")}>
+                      View Collection Details
+                    </Button>
                   </div>
 
                   {/* Expense Summary */}
@@ -161,11 +156,9 @@ export default function CashbookPage() {
                         <span>₹{totalExpenditure.toLocaleString()}</span>
                       </div>
                     </div>
-                    <Link href="/expenditure">
-                      <Button className="mt-3 w-full bg-transparent" variant="outline">
-                        View Expenditure Details
-                      </Button>
-                    </Link>
+                    <Button className="mt-3 w-full bg-transparent" variant="outline" onClick={() => setActiveTab("transactions")}>
+                      View Expenditure Details
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -192,9 +185,7 @@ export default function CashbookPage() {
                         <td className="p-3 border-r text-gray-600">{transaction.date}</td>
                         <td className="p-3 border-r">{transaction.description}</td>
                         <td className="p-3 border-r">
-                          <Link href="/members" className="text-blue-600 hover:text-blue-800 hover:underline">
-                            {transaction.memberName}
-                          </Link>
+                          <span className="text-blue-600">{transaction.memberName}</span>
                         </td>
                         <td className="p-3 border-r">
                           <span
@@ -221,6 +212,5 @@ export default function CashbookPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
-  )
-}
+    )
+  }

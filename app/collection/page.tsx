@@ -1,11 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
 import { members, getMemberTotalPaid, getTotalCollection, type Member } from "@/lib/data/members"
 import { TrendingUp, Calendar, Users, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 export default function CollectionPage() {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null)
@@ -18,8 +16,7 @@ export default function CollectionPage() {
   const sortedMembers = [...members].sort((a, b) => getMemberTotalPaid(b) - getMemberTotalPaid(a))
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white p-4 rounded-lg border shadow-sm">
             <div className="flex items-center gap-3">
@@ -59,17 +56,20 @@ export default function CollectionPage() {
         </div>
 
         <div className="bg-white p-6 rounded-lg border shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">Collection Details</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">Collection Details</h2>
+            <Button className="bg-green-600 hover:bg-green-700 text-white">Add Collection</Button>
+          </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse border border-green-300">
               <thead>
-                <tr className="bg-gray-50 border-b">
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Rank</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Member Name</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Total Amount</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Payments</th>
-                  <th className="text-left p-3 font-semibold text-gray-900 border-r">Last Payment Date</th>
+                <tr className="bg-gray-100 border-b border-green-300">
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-300">Rank</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-300">Member Name</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-300">Total Amount</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-300">Payments</th>
+                  <th className="text-left p-3 font-semibold text-gray-900 border-r border-green-300">Last Payment Date</th>
                   <th className="text-left p-3 font-semibold text-gray-900">Actions</th>
                 </tr>
               </thead>
@@ -81,23 +81,25 @@ export default function CollectionPage() {
                   return (
                     <tr
                       key={member.id}
-                      className={`border-b hover:bg-gray-50 ${index % 2 === 0 ? "bg-white" : "bg-gray-25"}`}
+                      className={`border-b border-green-300 hover:bg-gray-50 ${index % 2 === 0 ? "bg-white" : "bg-gray-25"}`}
                     >
-                      <td className="p-3 border-r font-bold text-gray-900">#{index + 1}</td>
-                      <td className="p-3 border-r">
-                        <Link href="/members" className="font-medium text-blue-600 hover:text-blue-800 hover:underline">
+                      <td className="p-3 border-r border-green-300 font-bold text-gray-900">#{index + 1}</td>
+                      <td className="p-3 border-r border-green-300">
+                        <button
+                          className="font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                          onClick={() => setSelectedMember(member)}
+                        >
                           {member.name}
-                        </Link>
+                        </button>
                       </td>
-                      <td className="p-3 border-r font-semibold text-green-600">₹{totalPaid.toLocaleString()}</td>
-                      <td className="p-3 border-r text-gray-600">{member.paymentHistory.length} payments</td>
-                      <td className="p-3 border-r text-gray-600">{member.paidDate || "No payment"}</td>
+                      <td className="p-3 border-r border-green-300 font-semibold text-green-600">₹{totalPaid.toLocaleString()}</td>
+                      <td className="p-3 border-r border-green-300 text-gray-600">{member.paymentHistory.length} payments</td>
+                      <td className="p-3 border-r border-green-300 text-gray-600">{member.paidDate || "No payment"}</td>
                       <td className="p-3">
                         <Button
-                          variant="outline"
                           size="sm"
                           onClick={() => setSelectedMember(member)}
-                          className="flex items-center gap-1"
+                          className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white"
                         >
                           <Eye className="h-3 w-3" />
                           Details
@@ -143,14 +145,10 @@ export default function CollectionPage() {
                 <Button variant="outline" onClick={() => setSelectedMember(null)}>
                   Close
                 </Button>
-                <Link href="/members">
-                  <Button>View All Members</Button>
-                </Link>
               </div>
             </div>
           </div>
         )}
       </div>
-    </DashboardLayout>
-  )
-}
+    )
+  }

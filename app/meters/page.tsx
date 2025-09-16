@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Plus, Edit, Trash2 } from "lucide-react"
@@ -46,15 +45,14 @@ export default function MetersPage() {
   ])
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Page Header */}
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Members Management</h1>
             <p className="text-gray-600 mt-1">Manage community members and their details</p>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-green-600 hover:bg-green-700 text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Member
           </Button>
@@ -67,29 +65,29 @@ export default function MetersPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="w-full border-collapse border border-gray-300">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left p-3 font-semibold">Profile</th>
-                    <th className="text-left p-3 font-semibold">Name</th>
-                    <th className="text-left p-3 font-semibold">Join Date</th>
-                    <th className="text-left p-3 font-semibold">Status</th>
+                  <tr className="bg-gray-100 border-b border-gray-300">
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Profile</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Name</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Join Date</th>
+                    <th className="text-left p-3 font-semibold border-r border-gray-300">Status</th>
                     <th className="text-left p-3 font-semibold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {members.map((member) => (
-                    <tr key={member.id} className="border-b hover:bg-gray-50">
-                      <td className="p-3">
+                    <tr key={member.id} className="border-b border-gray-300 hover:bg-gray-50">
+                      <td className="p-3 border-r border-gray-300">
                         <img
                           src={member.profileImage || "/placeholder.svg"}
                           alt={member.name}
                           className="w-10 h-10 rounded-full object-cover"
                         />
                       </td>
-                      <td className="p-3 font-medium">{member.name}</td>
-                      <td className="p-3 text-gray-600">{member.joinDate}</td>
-                      <td className="p-3">
+                      <td className="p-3 border-r border-gray-300 font-medium">{member.name}</td>
+                      <td className="p-3 border-r border-gray-300 text-gray-600">{member.joinDate}</td>
+                      <td className="p-3 border-r border-gray-300">
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-medium ${
                             member.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
@@ -100,7 +98,7 @@ export default function MetersPage() {
                       </td>
                       <td className="p-3">
                         <div className="flex space-x-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
                             <Edit className="w-4 h-4" />
                           </Button>
                           <Button
@@ -120,6 +118,5 @@ export default function MetersPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
-  )
-}
+    )
+  }

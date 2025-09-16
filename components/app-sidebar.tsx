@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { Home, Activity, Settings, User, FileText } from "lucide-react"
+import { User } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -18,22 +18,18 @@ const menuItems = [
   {
     title: "Overview",
     url: "/",
-    icon: Home,
   },
   {
     title: "Meters",
     url: "/meters",
-    icon: Activity,
   },
   {
     title: "Reports",
     url: "/reports",
-    icon: FileText,
   },
   {
     title: "Settings",
     url: "/settings",
-    icon: Settings,
   },
 ]
 
@@ -59,9 +55,8 @@ export function AppSidebar() {
                     isActive={pathname === item.url}
                     className="data-[active=true]:bg-[#FF6B00] data-[active=true]:text-black hover:bg-[#FF6B00]/20"
                   >
-                    <a href={item.url} className="flex items-center gap-3 px-3 py-2">
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
+                    <a href={item.url} className="flex items-center px-3 py-2">
+                      <span className="ml-0">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -80,3 +75,4 @@ export function AppSidebar() {
     </Sidebar>
   )
 }
+
